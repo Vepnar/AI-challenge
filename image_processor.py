@@ -11,7 +11,7 @@ IMG_HEIGHT = 50
 IMG_WIDTH = 50
 
 # The labels we want to learn to the AI.
-SELECTED_LABEL = [2, 3, 4, 5, 6]
+SELECTED_LABEL = [2, 3, 4]
 
 # The amount of samples per label
 LABEL_SIZE = 2438

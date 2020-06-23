@@ -11,6 +11,22 @@ from tensorflow.keras.layers import (
     MaxPooling2D,
 )
 
+# This is from stackoverflow
+# Source: https://stackoverflow.com/questions/53698035/failed-to-get-convolution-algorithm-this-is-probably-because-cudnn-failed-to-in
+# gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+    # Restrict TensorFlow to only allocate 1*X GB of memory on the first GPU
+    try:
+        tf.config.experimental.set_virtual_device_configuration(
+            gpus[0],
+            [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=(1024))],
+        )
+        logical_gpus = tf.config.experimental.list_logical_devices("GPU")
+        print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+    except RuntimeError as e:
+        # Virtual devices must be set before GPUs have been initialized
+        print(e)
+
 # The smaller the images the faster the neuralnetwork learns.
 IMG_HEIGHT = 50
 
@@ -24,10 +40,10 @@ EPOCH = 25
 VALIDATION_SPLIT = 0.1
 
 # Size of training batches
-BATCH_SIZE = 32
+BATCH_SIZE = 256
 
 # The amount of classes
-CLASSES = 5
+CLASSES = 3
 
 DATASET_LABELS = "./dataset/labels.npy"
 DATASET_FEATURES = "./dataset/features.npy"
@@ -41,12 +57,10 @@ model = Sequential(
     [
         Conv2D(64, 3, padding="same", activation="relu", input_shape=x.shape[1:],),
         MaxPooling2D(),
-        Conv2D(32, 3, padding="same", activation="relu",),
-        MaxPooling2D(),
         Conv2D(128, 3, padding="same", activation="relu",),
         MaxPooling2D(),
         Flatten(),
-        Dense(512, activation="relu"),
+        Dense(128, activation="relu"),
         Dense(CLASSES),
     ]
 )
