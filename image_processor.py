@@ -4,12 +4,13 @@ import cv2
 import json
 import random
 import numpy as np
-import tensorflow as tf
 
 # The smaller the images the faster the neuralnetwork learns.
 IMG_HEIGHT = 50
 # The deeplearning neuralnetwork always need images from the same size.
 IMG_WIDTH = 50
+
+CLASSES = 6
 
 # The directory where we downloaded our images.
 DATASET_IMAGES = "./dataset/images"
@@ -38,8 +39,12 @@ def process_image(path):
         metadata = json.load(metadata_file)
         expected_quantity = metadata["EXPECTED_QUANTITY"]
 
+    # Convert expected_quantity to an one hot encoding.
+    label = [0] * CLASSES
+    label[expected_quantity] = 1
+
     # Return processed image and the expected quantity.
-    return img_array, expected_quantity
+    return img_array, label
 
 
 if __name__ == "__main__":
@@ -72,6 +77,9 @@ if __name__ == "__main__":
     # Reshape the features array.
     x = np.array(x).reshape(-1, IMG_HEIGHT, IMG_WIDTH, 1)
 
+    # Normalize the features to floats
+    x = x / 255.0
+
     # Save our procesed data to a numpy file
-    np.save(DATASET_LABELS, x)
+    np.save(DATASET_LABELS, y)
     np.save(DATASET_FEATURES, x)
