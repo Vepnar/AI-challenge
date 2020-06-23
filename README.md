@@ -19,6 +19,9 @@ I didn't download enough images to train my machine-learning model.
 ### Fourth problem.
 The data needs to be clean and is not balanced.
 
+### Fifth problem.
+Tweaking the dataset takes a lot of time & tensorflow doesn't unload the used VRAM.
+
 # How to run this on your system.
 1. Clone my GitHub repository on your system.
 `git clone https://github.com/Vepnar/AI-challenge.git`
