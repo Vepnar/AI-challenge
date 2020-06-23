@@ -1,29 +1,32 @@
-# AI-Challenge
+# AI-Challenge.
 
-I'm trying to solve this challenge [this]("https://github.com/silverbottlep/abid_challenge") without an amazon AWS account.
+I'm trying to solve this challenge [this]("https://github.com/silverbottlep/abid_challenge") without an amazon AWS account. On a rather old system.
 
-## First problem
-I do not have an Amazon AWS account and I can not create one because it requires credit card information which I dont have. So I came up with an alternative.
-[this script]("https://github.com/Vepnar/AI-challenge/blob/master/bucket-downloader.sh") Can download all files and metadata from the amazon bucket to my computer without the need of an amazon bucket
+## First problem.
+I don't have an Amazon AWS account and I can not create one. That's why I created this script as an alternative.
+[this script]("https://github.com/Vepnar/AI-challenge/blob/master/bucket-downloader.sh") will download all files and metadata from the amazon bucket to my computer without the need of an amazon bucket
 
-## Second thing to do.
-We need to preprocess our images to be the same size with OpenCV2.
+## Second thing I did.
+We need to preprocess our images to be the same size as OpenCV2.
 
 I used `image_processor.py` to make all images 50x50 pixels and made them grayscale.
 
 This will reduce the amount of computing power I need to train the model.
 
-# How to run this on your system
-1. Clone my github repository on your system.
+### Third problem.
+I didn't download enough images to train my machine learning model. That is why it became over fitted
+
+# How to run this on your system.
+1. Clone my GitHub repository on your system.
 `git clone https://github.com/Vepnar/AI-challenge.git`
-2. Download all requirements
-`sudo apt-get install wget python3 python3-opencv2`
-3. CD into into my github repository
+2. Download requirements for this application.
+`sudo apt-get install wget python3 python3-opencv2 tensorFlow`
+3. Go into the cloned GitHub repository.
 `cd AI-challenge`
-3. Make the bash file executable
+4. Update the permissions bash script to make it executable.
 `chmod +x bucket-downloader.sh`
-4. Download all images (This might take a while)
+5. Download all images from the AWS bucket.
 `./bucket-downloader.sh`
-5. Process all downloaded images
+6. Now you need to process all the downloaded images.
 `python3 image_processor.py`
 
