@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import numpy
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
@@ -23,7 +24,10 @@ EPOCH = 25
 VALIDATION_SPLIT = 0.1
 
 # Size of training batches
-BATCH_SIZE = 128
+BATCH_SIZE = 32
+
+# The amount of classes
+CLASSES = 5
 
 DATASET_LABELS = "./dataset/labels.npy"
 DATASET_FEATURES = "./dataset/features.npy"
@@ -43,7 +47,7 @@ model = Sequential(
         MaxPooling2D(),
         Flatten(),
         Dense(512, activation="relu"),
-        Dense(6),
+        Dense(CLASSES),
     ]
 )
 

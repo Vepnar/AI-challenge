@@ -14,13 +14,16 @@ I used `image_processor.py` to make all images 50x50 pixels and made them graysc
 This will reduce the amount of computing power I need to train the model.
 
 ### Third problem.
-I didn't download enough images to train my machine learning model. That is why it became over fitted
+I didn't download enough images to train my machine-learning model. 
+
+### Fourth problem.
+The data needs to be clean and is not balanced.
 
 # How to run this on your system.
 1. Clone my GitHub repository on your system.
 `git clone https://github.com/Vepnar/AI-challenge.git`
 2. Download requirements for this application.
-`sudo apt-get install wget python3 python3-opencv2 tensorFlow`
+`sudo apt-get install wget python3 python3-opencv2 tensorflow`
 3. Go into the cloned GitHub repository.
 `cd AI-challenge`
 4. Update the permissions bash script to make it executable.
@@ -29,4 +32,6 @@ I didn't download enough images to train my machine learning model. That is why 
 `./bucket-downloader.sh`
 6. Now you need to process all the downloaded images.
 `python3 image_processor.py`
+7. Now you're ready to start the training.
+`python3 training.py`   
 

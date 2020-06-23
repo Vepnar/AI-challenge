@@ -10,7 +10,7 @@ DATASET_METADATA = "./dataset/metadata"
 label_list = {}
 labels = 0
 
-print('Started reading', end='')
+print("Started reading", end="")
 
 # Find all images inside the DATASET_METADATA directory
 for img in os.listdir(DATASET_METADATA):
@@ -28,16 +28,16 @@ for img in os.listdir(DATASET_METADATA):
         if expected_quantity in label_list:
             label_list[expected_quantity] += 1
         else:
-            label_list.update({expected_quantity : 1})
+            label_list.update({expected_quantity: 1})
 
         # Update the label counter.
         labels += 1
 
         # Print a dot every 1000 files.
         if labels % 1000 == 0:
-            print('.',end='')
+            print(".", end="")
 
 # Print the parsed data in json format
-print('')
-print(f'Total amount of labels {labels}')
-print(f'lables: {json.dumps(label_list,sort_keys=True, indent=4)}')
+print("")
+print(f"Total amount of labels {labels}")
+print(f"lables: {json.dumps(label_list,sort_keys=True, indent=4)}")
