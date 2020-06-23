@@ -20,7 +20,7 @@ I didn't download enough images to train my machine-learning model.
 The data needs to be clean and is not balanced.
 
 ### Fifth problem.
-Tweaking the dataset takes a lot of time & tensorflow doesn't unload the used VRAM.
+Tweaking the dataset takes a lot of time & tensorflow doesn't release the used RAM/VRAM.
 
 # How to run this on your system.
 1. Clone my GitHub repository on your system.

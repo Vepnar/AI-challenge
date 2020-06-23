@@ -9,4 +9,4 @@ USER 1000:1000
 RUN nvidia-smi
 
 
-CMD python training.py
+CMD python automated_trainer.py

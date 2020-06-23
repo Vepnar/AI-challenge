@@ -1,0 +1,58 @@
+[
+        {
+            "con" : 3,
+            "con_size" : 64,
+            "dense" : 1,
+            "dense_size" : 64,
+            "name" : "con-3-64-dense-1-64"
+        },
+        {
+            "con" : 3,
+            "con_size" : 64,
+            "dense" : 0,
+            "dense_size" : 64,
+            "name" : "con-3-64"
+        },
+        {
+            "con" : 2,
+            "con_size" : 64,
+            "dense" : 1,
+            "dense_size" : 64,
+            "name" : "con-2-64-dense-1-64"
+        },
+        {
+            "con" : 1,
+            "con_size" : 64,
+            "dense" : 1,
+            "dense_size" : 64,
+            "name" : "con-1-64-dense-1-64"
+        },
+        {
+            "con" : 0,
+            "con_size" : 64,
+            "dense" : 1,
+            "dense_size" : 64,
+            "name" : "con-3-64-dense-1-64"
+        },
+        {
+            "con" : 2,
+            "con_size" : 64,
+            "dense" : 1,
+            "dense_size" : 256,
+            "name" : "con-2-64-dense-1-256"
+        },
+        {
+            "con" : 2,
+            "con_size" : 32,
+            "dense" : 1,
+            "dense_size" : 512,
+            "name" : "con-2-32-dense-1-256"
+        },
+        {
+            "con" : 2,
+            "con_size" : 32,
+            "dense" : 2,
+            "dense_size" : 64,
+            "name" : "con-2-32-dense-1-256"
+        }
+]
