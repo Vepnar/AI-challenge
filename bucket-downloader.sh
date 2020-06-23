@@ -1,13 +1,12 @@
-# Download from 0 to 200 to get all samples with 0 items 
+# Download from 1 to 200 to get all samples with 0 items 
 # Download from 201 to 400 to get all samples with 1 item
 # Download from 401 to 600 to get all samples with 2 items
 # Download form 601 to 800 to get all samples with 3 items
-# 800 to 100 for 4 items
+# 801 to 1000 for 4 items
 # 1001 to 1200 for 5 items
 
-
-start=201
-end=301
+start=1
+end=1200
 image_dir="./dataset/images"
 metadata_dir="./dataset/metadata"
 
