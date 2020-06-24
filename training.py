@@ -11,19 +11,20 @@ from tensorflow.keras.layers import (
     Flatten,
     Conv2D,
     MaxPooling2D,
+    BatchNormalization
 )
 
 # The smaller the images the faster the neuralnetwork learns.
 IMG_HEIGHT = 50
 
 # Limit gpu usage. zero when there is no limit
-GPU_LIMIT = 784
+GPU_LIMIT = 1152
 
 # The deeplearning neuralnetwork always need images from the same size.
 IMG_WIDTH = 50
 
 # Amound of epochs.
-EPOCH = 25
+EPOCH = 50
 
 # Amount of data used for validation
 VALIDATION_SPLIT = 0.1
@@ -76,7 +77,7 @@ def get_tensorboard(name):
 
 
 def create_model(x, classes):
-    # Created model wigh layers
+    """Created model Convolutional & Dense with layers."""
     model = Sequential(
         [
             Conv2D(64, 3, padding="same", activation="relu", input_shape=x.shape[1:],),
@@ -99,7 +100,7 @@ def create_model(x, classes):
 
 
 def train_model(model, x, y, tensorboard):
-    # Train the model
+    """Train the already generated model with the labels and features."""
     model.fit(
         x,
         y,
