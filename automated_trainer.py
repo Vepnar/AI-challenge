@@ -34,7 +34,7 @@ def create_model(x, classes, config):
         model.add(Dense(config["dense_size"], activation="relu"))
 
     # Output dense layer.
-    model.add(Dense(classes))
+    model.add(Dense(classes, activation="sigmoid"))
 
     # Compile the model with the adam optimizer and categorial cross entropy.
     model.compile(
@@ -70,6 +70,7 @@ if __name__ == "__main__":
     # Load configuration from the json file
     config_file = open(CONFIG_FILE, "r")
     json_data = json.load(config_file)
+    print(f'{len(json_data)} Types of configuration found in the config file.')
     for config in json_data:
 
         # Create a subproccess for tensorflow.
