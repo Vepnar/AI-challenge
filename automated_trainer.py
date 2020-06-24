@@ -20,6 +20,11 @@ def create_model(x, classes, config):
             MaxPooling2D(),
         ]
     )
+    if config.get("dropout"):
+        model.add(Dropout(config["dropout"]))
+
+    if config.get("normalization"):
+        model.add(BatchNormalization())
 
     # Create the amount of convolutional layers given in the configuration file.
     for _ in range(config["con"]):
@@ -29,10 +34,18 @@ def create_model(x, classes, config):
     # Turn 3D feature map into a 1D feature vector
     model.add(Flatten())
 
+    if config.get("dropout"):
+        model.add(Dropout(config["dropout"]))
+
+    if config.get("normalization"):
+        model.add(BatchNormalization())
+
     # Create the amount of dense layers given in the configuration file.
     for _ in range(config["dense"]):
         model.add(Dense(config["dense_size"], activation="relu"))
 
+    if config.get("normalization"):
+        model.add(BatchNormalization())
     # Output dense layer.
     model.add(Dense(classes, activation="sigmoid"))
 
