@@ -3,55 +3,55 @@ import json
 import multiprocessing
 
 # Disable logging
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 from training import *
 
 CONFIG_FILE = "automated.json"
 
 
-def create_layer(config, model , x, classes):
+def create_layer(config, model, x, classes):
     """Create a layer from a dictionary"""
     options = {}
 
     # Get the type of activation
-    option = config.get('activation')
+    option = config.get("activation")
     if option:
-        options.update({'activation' : option})
+        options.update({"activation": option})
 
     # Get the type of padding
-    option = config.get('padding')
+    option = config.get("padding")
     if option:
-        options.update({'padding' : option})
+        options.update({"padding": option})
 
     # Set layer as input layer
-    option = config.get('input_layer')
+    option = config.get("input_layer")
     if option:
-        options.update({'input_shape' : x.shape[1:]})
+        options.update({"input_shape": x.shape[1:]})
 
     # Set layer as output layer
-    option = config.get('output_layer')
+    option = config.get("output_layer")
     if option:
         size = classes
     else:
-        size = config.get('nodes')
+        size = config.get("nodes")
 
     # Set the type of layer for example cov2d or dense.
-    option = config.get('type')
-    if option == 'cov2d':
-        kernel = config.get('kernel', 3)
+    option = config.get("type")
+    if option == "cov2d":
+        kernel = config.get("kernel", 3)
         model.add(Conv2D(size, kernel, **options))
         model.add(MaxPooling2D())
 
-    if option == 'dense':
+    if option == "dense":
         model.add(Dense(size, **options))
 
-    if option == 'flatten':
+    if option == "flatten":
         model.add(Flatten())
 
     # Add a dropout.
     if config.get("dropout"):
-            model.add(Dropout(config["dropout"]))
+        model.add(Dropout(config["dropout"]))
 
     # Add a batch normalization layer.
     if config.get("normalization"):
@@ -65,9 +65,8 @@ def create_model(x, classes, config):
     model = Sequential()
 
     # Create layers for the model based on the settings in the configuration file
-    for layer in config.get('layers'):
-        create_layer(layer, model, x , classes)
-    
+    for layer in config.get("layers"):
+        create_layer(layer, model, x, classes)
 
     # Compile the model with the adam optimizer and categorial cross entropy.
     model.compile(
@@ -96,14 +95,14 @@ def tensorflow_process(config):
     model = create_model(x, classes, config)
 
     # Train the model with our labels and features.
-    train_model(model, x, y, tensorboard)
+    train_generator_model(model, x, y, tensorboard)
 
 
 if __name__ == "__main__":
     # Load configuration from the json file
     config_file = open(CONFIG_FILE, "r")
     json_data = json.load(config_file)
-    print(f'{len(json_data)} Types of configuration found in the config file.')
+    print(f"{len(json_data)} Types of configuration found in the config file.")
     for config in json_data:
 
         # Create a subproccess for tensorflow.
@@ -111,6 +110,6 @@ if __name__ == "__main__":
         process_eval = multiprocessing.Process(target=tensorflow_process, args=[config])
         process_eval.start()
         process_eval.join()
-        
+
     # Close the configuration file.
     config_file.close()

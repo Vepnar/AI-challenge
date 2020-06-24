@@ -11,17 +11,11 @@ from tensorflow.keras.layers import (
     Flatten,
     Conv2D,
     MaxPooling2D,
-    BatchNormalization
+    BatchNormalization,
 )
-
-# The smaller the images the faster the neuralnetwork learns.
-IMG_HEIGHT = 50
 
 # Limit gpu usage. zero when there is no limit
 GPU_LIMIT = 1152
-
-# The deeplearning neuralnetwork always need images from the same size.
-IMG_WIDTH = 50
 
 # Amound of epochs.
 EPOCH = 50
@@ -97,6 +91,50 @@ def create_model(x, classes):
         metrics=["accuracy"],
     )
     return model
+
+
+def _get_data(features, labels, batch_size):
+    """Only load the batch into memory and not the whole dataset"""
+    data_size = len(labels)
+
+    # Never stop sending data
+    while 1:
+        batch_start = 0
+        batch_end = batch_size
+
+        # Loop through all samples
+        while batch_start < data_size:
+            limit = min(batch_end, data_size)
+
+            # Return one batch back to the trainer
+            x = features[batch_start:limit]
+            y = labels[batch_start:limit]
+            yield (x, y)
+
+            # Increment counter
+            batch_start += batch_size
+            batch_end += batch_size
+
+
+def train_generator_model(model, x, y, tensorboard):
+    """Train the already generated model with the labels and features."""
+
+    # Take some samples and turn them into validation data
+    validation_count = int(len(x) * VALIDATION_SPLIT)
+    validation_features = x[:validation_count]
+    validation_labels = y[:validation_count]
+
+    # Remove taken items from the test data
+    x = x[validation_count:]
+    y = y[validation_count:]
+
+    model.fit(
+        _get_data(x, y, BATCH_SIZE),
+        epochs=EPOCH,
+        steps_per_epoch=int(len(x) / BATCH_SIZE),
+        validation_data=(validation_features, validation_labels),
+        callbacks=[tensorboard],
+    )
 
 
 def train_model(model, x, y, tensorboard):
