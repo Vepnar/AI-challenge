@@ -1,58 +1,320 @@
 [
-        {
-            "con" : 3,
-            "con_size" : 64,
-            "dense" : 1,
-            "dense_size" : 64,
-            "name" : "con-3-64-dense-1-64"
-        },
-        {
-            "con" : 3,
-            "con_size" : 64,
-            "dense" : 0,
-            "dense_size" : 64,
-            "name" : "con-3-64"
-        },
-        {
-            "con" : 2,
-            "con_size" : 64,
-            "dense" : 1,
-            "dense_size" : 64,
-            "name" : "con-2-64-dense-1-64"
-        },
-        {
-            "con" : 1,
-            "con_size" : 64,
-            "dense" : 1,
-            "dense_size" : 64,
-            "name" : "con-1-64-dense-1-64"
-        },
-        {
-            "con" : 0,
-            "con_size" : 64,
-            "dense" : 1,
-            "dense_size" : 64,
-            "name" : "con-3-64-dense-1-64"
-        },
-        {
-            "con" : 2,
-            "con_size" : 64,
-            "dense" : 1,
-            "dense_size" : 256,
-            "name" : "con-2-64-dense-1-256"
-        },
-        {
-            "con" : 2,
-            "con_size" : 32,
-            "dense" : 1,
-            "dense_size" : 512,
-            "name" : "con-2-32-dense-1-256"
-        },
-        {
-            "con" : 2,
-            "con_size" : 32,
-            "dense" : 2,
-            "dense_size" : 64,
-            "name" : "con-2-32-dense-1-256"
-        }
+    {
+        "name" : "cov64-cov64-64d-sig",
+        "layers" : [
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 64,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+            },
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 64,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+
+            },
+            {
+                "type" : "flatten"
+            },
+            {
+                "type" : "dense",
+                "nodes" : 64,
+                "activation" : "sigmoid"
+            },
+            {
+                "type" : "dense",
+                "output_layer" : true,
+                "activation" : "sigmoid"
+            }
+        ]
+    },
+    {
+        "name" : "cov64-cov64-128d-sig",
+        "layers" : [
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 64,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+            },
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 64,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+
+            },
+            {
+                "type" : "flatten"
+            },
+            {
+                "type" : "dense",
+                "nodes" : 128,
+                "activation" : "sigmoid"
+            },
+            {
+                "type" : "dense",
+                "output_layer" : true,
+                "activation" : "sigmoid"
+            }
+        ]
+    },
+    {
+        "name" : "cov64-cov64-n128d-sig",
+        "layers" : [
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 64,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+            },
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 64,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+
+            },
+            {
+                "type" : "flatten"
+            },
+            {
+                "type" : "dense",
+                "nodes" : 128,
+                "activation" : "sigmoid",
+                "normalization" : true
+            },
+            {
+                "type" : "dense",
+                "output_layer" : true,
+                "activation" : "sigmoid"
+            }
+        ]
+    },
+    {
+        "name" : "cov64-cov64-nd128d-sig",
+        "layers" : [
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 64,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+            },
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 64,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+
+            },
+            {
+                "type" : "flatten"
+            },
+            {
+                "type" : "dense",
+                "nodes" : 128,
+                "activation" : "sigmoid",
+                "normalization" : true,
+                "dropout" : 0.1
+            },
+            {
+                "type" : "dense",
+                "output_layer" : true,
+                "activation" : "sigmoid"
+            }
+        ]
+    }, //
+    {
+        "name" : "cov128-cov32-64d-sig",
+        "layers" : [
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 128,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+            },
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 32,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+
+            },
+            {
+                "type" : "flatten"
+            },
+            {
+                "type" : "dense",
+                "nodes" : 64,
+                "activation" : "sigmoid"
+            },
+            {
+                "type" : "dense",
+                "output_layer" : true,
+                "activation" : "sigmoid"
+            }
+        ]
+    },
+    {
+        "name" : "cov128-cov32-128d-sig",
+        "layers" : [
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 128,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+            },
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 32,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+
+            },
+            {
+                "type" : "flatten"
+            },
+            {
+                "type" : "dense",
+                "nodes" : 128,
+                "activation" : "sigmoid"
+            },
+            {
+                "type" : "dense",
+                "output_layer" : true,
+                "activation" : "sigmoid"
+            }
+        ]
+    },
+    {
+        "name" : "cov128-cov32-n128d-sig",
+        "layers" : [
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 128,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+            },
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 32,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+
+            },
+            {
+                "type" : "flatten"
+            },
+            {
+                "type" : "dense",
+                "nodes" : 128,
+                "activation" : "sigmoid",
+                "normalization" : true
+            },
+            {
+                "type" : "dense",
+                "output_layer" : true,
+                "activation" : "sigmoid"
+            }
+        ]
+    },
+    {
+        "name" : "cov126-cov32-nd128d-sig",
+        "layers" : [
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 128,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+            },
+            {
+                "type" : "cov2d",
+                "input_layer" : true,
+                "padding" : "same",
+                "nodes" : 32,
+                "kernel" : 3,
+                "dropout" : 0.1,
+                "normalization" : true,
+                "activation" : "relu"
+
+            },
+            {
+                "type" : "flatten"
+            },
+            {
+                "type" : "dense",
+                "nodes" : 128,
+                "activation" : "sigmoid",
+                "normalization" : true,
+                "dropout" : 0.1
+            },
+            {
+                "type" : "dense",
+                "output_layer" : true,
+                "activation" : "sigmoid"
+            }
+        ]
+    }
 ]

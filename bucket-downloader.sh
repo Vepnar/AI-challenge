@@ -1,4 +1,4 @@
-start=11467
+start=0
 end=200000
 image_dir="./dataset/images"
 metadata_dir="./dataset/metadata"

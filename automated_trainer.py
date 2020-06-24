@@ -10,44 +10,64 @@ from training import *
 CONFIG_FILE = "automated.json"
 
 
+def create_layer(config, model , x, classes):
+    """Create a layer from a dictionary"""
+    options = {}
+
+    # Get the type of activation
+    option = config.get('activation')
+    if option:
+        options.update({'activation' : option})
+
+    # Get the type of padding
+    option = config.get('padding')
+    if option:
+        options.update({'padding' : option})
+
+    # Set layer as input layer
+    option = config.get('input_layer')
+    if option:
+        options.update({'input_shape' : x.shape[1:]})
+
+    # Set layer as output layer
+    option = config.get('output_layer')
+    if option:
+        size = classes
+    else:
+        size = config.get('nodes')
+
+    # Set the type of layer for example cov2d or dense.
+    option = config.get('type')
+    if option == 'cov2d':
+        kernel = config.get('kernel', 3)
+        model.add(Conv2D(size, kernel, **options))
+        model.add(MaxPooling2D())
+
+    if option == 'dense':
+        model.add(Dense(size, **options))
+
+    if option == 'flatten':
+        model.add(Flatten())
+
+    # Add a dropout.
+    if config.get("dropout"):
+            model.add(Dropout(config["dropout"]))
+
+    # Add a batch normalization layer.
+    if config.get("normalization"):
+        model.add(BatchNormalization())
+
+
 def create_model(x, classes, config):
     """Automated function to generate models"""
 
     # Generate model with required the minimum amount of layers.
-    model = Sequential(
-        [
-            Conv2D(64, 3, padding="same", activation="relu", input_shape=x.shape[1:]),
-            MaxPooling2D(),
-        ]
-    )
-    if config.get("dropout"):
-        model.add(Dropout(config["dropout"]))
+    model = Sequential()
 
-    if config.get("normalization"):
-        model.add(BatchNormalization())
-
-    # Create the amount of convolutional layers given in the configuration file.
-    for _ in range(config["con"]):
-        model.add(Conv2D(config["con_size"], 3, padding="same", activation="relu"))
-        model.add(MaxPooling2D())
-
-    # Turn 3D feature map into a 1D feature vector
-    model.add(Flatten())
-
-    if config.get("dropout"):
-        model.add(Dropout(config["dropout"]))
-
-    if config.get("normalization"):
-        model.add(BatchNormalization())
-
-    # Create the amount of dense layers given in the configuration file.
-    for _ in range(config["dense"]):
-        model.add(Dense(config["dense_size"], activation="relu"))
-
-    if config.get("normalization"):
-        model.add(BatchNormalization())
-    # Output dense layer.
-    model.add(Dense(classes, activation="sigmoid"))
+    # Create layers for the model based on the settings in the configuration file
+    for layer in config.get('layers'):
+        create_layer(layer, model, x , classes)
+    
 
     # Compile the model with the adam optimizer and categorial cross entropy.
     model.compile(
@@ -65,7 +85,7 @@ def tensorflow_process(config):
         setup_gpu_limiter(GPU_LIMIT)
 
     # Name of the current train session.
-    name = f"Training-{config['name']}-{str(time.time())}"
+    name = f"{config['name']}-{str(time.time())}"
 
     # Get tensorboard.
     tensorboard = get_tensorboard(name)
