@@ -1,40 +1,39 @@
-# AI-Challenge.
+# Welcome to my AI challenge.
 
-I'm trying to solve this challenge [this]("https://github.com/silverbottlep/abid_challenge") without an amazon AWS account. On a rather old system.
+I tried to solve task 1.1 of the [abid challenge](https://github.com/silverbottlep/abid_challenge
+). While trying to solve this challenge I came across a couple of small issues.
 
-## First problem.
-I don't have an Amazon AWS account and I can not create one. That's why I created this script as an alternative.
-[this script]("https://github.com/Vepnar/AI-challenge/blob/master/bucket-downloader.sh") will download all files and metadata from the amazon bucket to my computer without the need of an amazon bucket
+## The issues I have faced.
+- I don't have an Amazon account.
+	- I solved this by making a [script](https://github.com/Vepnar/AI-challenge/blob/master/bucket-downloader.sh) that would download every file from the AWS Bucket with HTTP requests. This was rather slow but it worked.
+- The images are not all the same size and are in RGB.
+	- I solved it by using this [script](https://github.com/Vepnar/AI-challenge/blob/master/image_processor.py). This would resize all images and make them grey with OpenCV.
+- Overfitting.
+	- I first downloaded around 1200 images of 5 types. I quickly noticed that my model has a low training loss and a high validation loss. This means it is overfitting and I need more data. <br>
+Training accuracy:
+![Training accuracy one](https://raw.githubusercontent.com/Vepnar/AI-challenge/master/pictures/train1.png)Validation accuracy:
+![Validation accuracy one](https://raw.githubusercontent.com/Vepnar/AI-challenge/master/pictures/validation1.png)
 
-## Second thing I did.
-We need to preprocess our images to be the same size as OpenCV2.
+- Unbalanced data set.
+	- Now I've downloaded a bigger dataset but it is very unbalanced like shown below. For analysing the data I've used the following [script](https://github.com/Vepnar/AI-challenge/blob/master/image_analyzer.py).
+![unbalanced data](https://raw.githubusercontent.com/silverbottlep/abid_challenge/master/figs/stats.png)      
+-  Training on the CPU is slow and I can't downgrade my CUDA drivers.
+	- That is why started [training](https://github.com/Vepnar/AI-challenge/blob/master/training.py) on my computer with [this](https://github.com/Vepnar/AI-challenge/blob/master/Dockerfile) and [this](https://github.com/Vepnar/AI-challenge/blob/master/docker-compose.yml) docker file.
+- Optimising the model itself is rather slow.
+	- That is why I decided to make it automated with the following [script](https://github.com/Vepnar/AI-challenge/blob/master/automated_trainer.py).
+- Tensorflow takes too much VRAM.
+	- That is why I created my own  batch generator. This made it possible to train with somewhat bigger neuralnetworks but it hugely reduced the training speed.
 
-I used `image_processor.py` to make all images 50x50 pixels and made them grayscale.
+# Limitations
+After trying so many different models I got problems with my system. Some network like [AlexNet](https://en.wikipedia.org/wiki/AlexNet) are just too heavy for my system to try. I sadly have to abandon this project because of the limitations on my system.
 
-This will reduce the amount of computing power I need to train the model.
+## Things I've tried
+- Different amounts  / sizes of 2D convolutional layers.
+- Different amounts  / sizes of deep layers.
+- Different activation functions for example: (relu) Rectifier, softmax, (tanh) Hyperbolic functions, sigmoid.
+- Different kernel sizes.
+- Dropouts.
+- Batch normalization.
+- Alexnet
 
-### Third problem.
-I didn't download enough images to train my machine-learning model. 
-
-### Fourth problem.
-The data needs to be clean and is not balanced.
-
-### Fifth problem.
-Tweaking the dataset takes a lot of time & tensorflow doesn't release the used RAM/VRAM.
-
-# How to run this on your system.
-1. Clone my GitHub repository on your system.
-`git clone https://github.com/Vepnar/AI-challenge.git`
-2. Download requirements for this application.
-`sudo apt-get install wget python3 python3-opencv2 tensorflow`
-3. Go into the cloned GitHub repository.
-`cd AI-challenge`
-4. Update the permissions bash script to make it executable.
-`chmod +x bucket-downloader.sh`
-5. Download all images from the AWS bucket.
-`./bucket-downloader.sh`
-6. Now you need to process all the downloaded images.
-`python3 image_processor.py`
-7. Now you're ready to start the training.
-`python3 training.py`   
-
+![Alexnet](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fimage.slidesharecdn.com%2Fpydatatalk-150729202131-lva1-app6892%2F95%2Fdeep-learning-with-python-pydata-seattle-2015-35-638.jpg%3Fcb%3D1438315555&f=1&nofb=1)
